@@ -2,7 +2,7 @@
 layout: about
 title: about
 permalink: /
-subtitle: <a href='https://people.epfl.ch/flavio.martinelli?lang=en'>EPFL</a>. Lausanne, Switzerland (CH).
+subtitle: <a href='https://people.epfl.ch/flavio.martinelli?lang=en'>EPFL</a>, Lausanne, Switzerland (CH).
 
 profile:
   align: right
