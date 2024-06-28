@@ -18,7 +18,7 @@ social: true # includes social icons at the bottom of the page
 
 It's Flavio here! I am currently a PhD student in the <a href='https://www.epfl.ch/labs/lcn/'>Laboratory of Computational Neuroscience</a> at <a href='https://people.epfl.ch/flavio.martinelli?lang=en'>EPFL</a>, supervised by <a href='https://lcnwww.epfl.ch/gerstner/'>Wulfram Gerstner</a> and <a href='https://people.epfl.ch/johanni.brea/?lang=en'>Johanni Brea</a>.
 
-My main research revolves around understanding weight structures in neural networks. 
+My main research revolves around understanding weight structures in neural networks. \
 I apply this knowledge on the following topics: 
 
 🕵️ ***Identifiability:*** can network parameters be reverse engineered? What types of constraints are needed? What are the implications for neural circuits?
