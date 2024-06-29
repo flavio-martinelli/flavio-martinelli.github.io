@@ -2,7 +2,7 @@
 layout: page
 permalink: /publications/
 title: publications
-description: 
+description: my publications in reverse chronological order, you can also check my <a href='https://scholar.google.com/citations?user=DabSKBgAAAAJ'>Google Scholar</a> page.
 nav: true
 nav_order: 2
 ---
