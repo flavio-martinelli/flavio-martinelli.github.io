@@ -11,4 +11,5 @@
   color: "#1e88e5"
 
 "Preprint":
-  color: "#228b22"
+  # Light forest green color
+  color: "#90ee90"
