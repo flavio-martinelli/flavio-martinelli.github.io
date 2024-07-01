@@ -2,3 +2,6 @@
   url: https://ieeexplore.ieee.org/xpl/conhome/1000002/all-proceedings
   color: "#ff985d"
 
+"ArXiv":
+  url: https://arxiv.org/
+  color: "#b31b1b"
