@@ -36,3 +36,21 @@
   preview={icassp2020b.png},
   abstract={Advances of deep learning for Artificial Neural Networks (ANNs) have led to significant improvements in the performance of digital signal processing systems implemented on digital chips. Although recent progress in low-power chips is remarkable, neuromorphic chips that run Spiking Neural Networks (SNNs) based applications offer an even lower power consumption, as a consequence of the ensuing sparse spikebased coding scheme. In this work, we develop a SNN-based Voice Activity Detection (VAD) system that belongs to the building blocks of any audio and speech processing system. We propose to use the bin encoding, a novel method to convert log mel filterbank bins of single-time frames into spike patterns. We integrate the proposed scheme in a bilayer spiking architecture which was evaluated on the QUT-NOISE-TIMIT corpus. Our approach shows that SNNs enable an ultra low-0power implementation of a VAD classifier that consumes only 3.8 μW, while achieving state-of-the-art performance.}
 }
+
+
+@article{brea2023mlpgradientflow,
+  title={Mlpgradientflow: going with the flow of multilayer perceptrons (and finding minima fast and accurately)},
+  author={Brea, Johanni and Martinelli, Flavio and {\c{S}}im{\c{s}}ek, Berfin and Gerstner, Wulfram},
+  journal={arXiv preprint arXiv:2301.10638},
+  year={2023},
+  bibtex_show={true},
+  abbr={ArXiv},
+  selected={false},
+  website={https://arxiv.org/abs/2301.10638},
+  doi={https://doi.org/10.48550/arXiv.2301.10638},
+  code={https://github.com/jbrea/MLPGradientFlow.jl},
+  preview={icassp2020b.png},
+  abstract={MLPGradientFlow is a software package to solve numerically the gradient flow differential equation θ ̇ = −∇L(θ; D), where θ are the parameters of a multi-layer perceptron, D is some data set, and ∇L is the gradient of a loss function. We show numerically that adaptive first- or higher-order integration methods based on Runge-Kutta schemes have better accuracy and convergence speed than gradient descent with the Adam optimizer. However, we find Newton’s method and approximations like BFGS preferable to find fixed points (local and global minima of L) efficiently and accurately. For small networks and data sets, gradients are usually computed faster than in pytorch and Hessian are computed at least 5× faster. Additionally, the package features an integrator for a teacher-student setup with bias-free, two-layer networks trained with standard Gaussian input in the limit of infinite data. The code is accessible at https://github.com/jbrea/MLPGradientFlow.jl.}
+}
+
+
