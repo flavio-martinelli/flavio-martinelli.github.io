@@ -1,6 +1,24 @@
 ---
 ---
 
+// selected papers go on top in order of appearence!!
+
+@inproceedings{martinelli2023expand,
+  title={Expand-and-Cluster: Parameter Recovery of Neural Networks},
+  author={Martinelli, Flavio and Simsek, Berfin and Gerstner*, Wulfram and Brea*, Johanni},
+  booktitle={Forty-first International Conference on Machine Learning (ICML)},
+  year={2024},
+  bibtex_show={true},
+  abbr={ICML},
+  selected={true},
+  website={https://openreview.net/pdf?id=3MIuPRJYwf},
+  doi={},
+  code={https://github.com/flavio-martinelli/expand-and-cluster},
+  preview={EC.png},
+  abstract={Can we identify the weights of a neural network by probing its input-output mapping? At first glance, this problem seems to have many solutions because of permutation, overparameterisation and activation function symmetries. Yet, we show that the incoming weight vector of each neuron is identifiable up to sign or scaling, depending on the activation function. Our novel method 'Expand-and-Cluster’ can identify layer sizes and weights of a target network for all commonly used activation functions. Expand-and-Cluster consists of two phases: (i) to relax the non-convex optimisation problem, we train multiple overparameterised student networks to best imitate the target function; (ii) to reverse engineer the target network's weights, we employ an ad-hoc clustering procedure that reveals the learnt weight vectors shared between students -- these correspond to the target weight vectors. We demonstrate successful weights and size recovery of trained shallow and deep networks with less than 10% overhead in the layer size and describe an 'ease-of-identifiability' axis by analysing 150 synthetic problems of variable difficulty.},
+  annotation={* equal senior author contribution}
+}
+
 
 @inproceedings{martinelli2020spiking,
   title={Spiking neural networks trained with backpropagation for low power neuromorphic implementation of voice activity detection},
@@ -51,22 +69,6 @@
   code={https://github.com/jbrea/MLPGradientFlow.jl},
   preview={MLPGradientFlow.png},
   abstract={MLPGradientFlow is a software package to solve numerically the gradient flow differential equation θ ̇ = −∇L(θ; D), where θ are the parameters of a multi-layer perceptron, D is some data set, and ∇L is the gradient of a loss function. We show numerically that adaptive first- or higher-order integration methods based on Runge-Kutta schemes have better accuracy and convergence speed than gradient descent with the Adam optimizer. However, we find Newton’s method and approximations like BFGS preferable to find fixed points (local and global minima of L) efficiently and accurately. For small networks and data sets, gradients are usually computed faster than in pytorch and Hessian are computed at least 5× faster. Additionally, the package features an integrator for a teacher-student setup with bias-free, two-layer networks trained with standard Gaussian input in the limit of infinite data. The code is accessible at https://github.com/jbrea/MLPGradientFlow.jl.}
-}
-
-@inproceedings{martinelli2023expand,
-  title={Expand-and-Cluster: Parameter Recovery of Neural Networks},
-  author={Martinelli, Flavio and Simsek, Berfin and Gerstner*, Wulfram and Brea*, Johanni},
-  booktitle={Forty-first International Conference on Machine Learning (ICML)},
-  year={2024},
-  bibtex_show={true},
-  abbr={ICML},
-  selected={true},
-  website={https://openreview.net/pdf?id=3MIuPRJYwf},
-  doi={},
-  code={https://github.com/flavio-martinelli/expand-and-cluster},
-  preview={EC.png},
-  abstract={Can we identify the weights of a neural network by probing its input-output mapping? At first glance, this problem seems to have many solutions because of permutation, overparameterisation and activation function symmetries. Yet, we show that the incoming weight vector of each neuron is identifiable up to sign or scaling, depending on the activation function. Our novel method 'Expand-and-Cluster’ can identify layer sizes and weights of a target network for all commonly used activation functions. Expand-and-Cluster consists of two phases: (i) to relax the non-convex optimisation problem, we train multiple overparameterised student networks to best imitate the target function; (ii) to reverse engineer the target network's weights, we employ an ad-hoc clustering procedure that reveals the learnt weight vectors shared between students -- these correspond to the target weight vectors. We demonstrate successful weights and size recovery of trained shallow and deep networks with less than 10% overhead in the layer size and describe an 'ease-of-identifiability' axis by analysing 150 synthetic problems of variable difficulty.},
-  annotation={* equal senior author contribution}
 }
 
 
