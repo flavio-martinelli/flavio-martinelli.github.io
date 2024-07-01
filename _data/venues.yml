@@ -8,5 +8,7 @@
 
 "ICML":
   url: https://icml.cc/
-  # add bluemarine color
   color: "#1e88e5"
+
+"Preprint":
+  color: "#228b22"
