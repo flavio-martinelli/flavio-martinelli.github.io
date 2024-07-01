@@ -30,11 +30,8 @@ I apply this knowledge on the following topics:
 
 <!-- Link to your social media connections, too. This theme is set up to use [Font Awesome icons](https://fontawesome.com/) and [Academicons](https://jpswalsh.github.io/academicons/), like the ones below. Add your Facebook, Twitter, LinkedIn, Google Scholar, or just disable all of them. -->
 
-<! -- 
-TODOs:
-
-news
-add paper pdfs for venues that allow it
-better BIO (?)
-
+<!-- TODOs:
+ news; 
+ add paper pdfs for venues that allow it; 
+ better BIO (?) 
 -->
