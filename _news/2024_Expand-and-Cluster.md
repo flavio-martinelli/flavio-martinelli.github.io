@@ -5,8 +5,7 @@ inline: true
 related_posts: false
 ---
 
-<div>
-📝 <a href='https://openreview.net/pdf?id=3MIuPRJYwf'>Expand-and-Cluster</a> is accepted to ICML 2024! 
+"📝 <a href='https://openreview.net/pdf?id=3MIuPRJYwf'>Expand-and-Cluster</a> is accepted to ICML 2024! 
 
 <br> <br>
 
@@ -16,4 +15,4 @@ related_posts: false
 
 ⚠️ Symmetries and overparameterised loss landscapes are heavily involved.
 
-</div>
+"
