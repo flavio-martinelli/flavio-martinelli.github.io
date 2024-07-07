@@ -6,7 +6,7 @@ related_posts: false
 ---
 
 <div>
-📝 [Expand-and-Cluster](https://openreview.net/pdf?id=3MIuPRJYwf) is accepted to ICML 2024! 
+📝 <a href='https://openreview.net/pdf?id=3MIuPRJYwf'>Expand-and-Cluster</a> is accepted to ICML 2024! 
 
 <br> <br>
 
