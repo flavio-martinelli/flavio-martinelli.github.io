@@ -5,14 +5,4 @@ inline: true
 related_posts: false
 ---
 
-"📝 <a href='https://openreview.net/pdf?id=3MIuPRJYwf'>Expand-and-Cluster</a> is accepted to ICML 2024! 
-
-<br> <br>
-
-🔍 We identify the weights of a neural network from simple input-output queries. 
-
-<br>
-
-⚠️ Symmetries and overparameterised loss landscapes are heavily involved.
-
-"
+📝 <a href='https://openreview.net/pdf?id=3MIuPRJYwf'>Expand-and-Cluster</a> is accepted to ICML 2024! <br> <br> 🔍 We identify the weights of a neural network from simple input-output queries. <br> ⚠️ Symmetries and overparameterised loss landscapes are heavily involved.
