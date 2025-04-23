@@ -11,9 +11,15 @@ profile:
   more_info: >
     <p>Rare pic of me well dressed</p>
 
+latest_posts:
+  enabled: true
+  scrollable: true # adds a vertical scroll bar if there are more than 3 new posts items
+  limit: 3 # leave blank to include all the blog posts
+
 news: true # includes a list of news items
 selected_papers: true # includes a list of papers marked as "selected={true}"
 social: true # includes social icons at the bottom of the page
+
 ---
 
 I am a PhD student in the <a href='https://www.epfl.ch/labs/lcn/'>Laboratory of Computational Neuroscience</a> at <a href='https://people.epfl.ch/flavio.martinelli?lang=en'>EPFL</a>, supervised by <a href='https://lcnwww.epfl.ch/gerstner/'>Wulfram Gerstner</a> and <a href='https://people.epfl.ch/johanni.brea/?lang=en'>Johanni Brea</a>. 

@@ -37,6 +37,20 @@
 <script defer src="{{ '/assets/js/common.js' | relative_url | bust_file_cache }}"></script>
 <script defer src="{{ '/assets/js/copy_code.js' | relative_url | bust_file_cache }}" type="text/javascript"></script>
 
+<!-- Load ReluPlayground JS scripts (don't load mathjax as it is loaded already) -->
+
+<script src="https://cdn.jsdelivr.net/npm/p5@1.11.1/lib/p5.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/numjs/0.14.2/numjs.js"></script>
+<script src="/assets/js/reluplayground/drawUtils.js" defer></script>
+<script src="/assets/js/reluplayground/utils.js" defer></script>
+<script src="/assets/js/reluplayground/explanations.js" defer></script>
+<script src="/assets/js/reluplayground/interaction_input_boxes.js" defer></script>
+<script src="/assets/js/reluplayground/interactions_output_space.js" defer></script>
+<script src="/assets/js/reluplayground/buttons_and_visuals.js" defer></script>
+<script src="/assets/js/reluplayground/ml.js" defer></script>
+<script src="/assets/js/reluplayground/sketch.js" defer></script>
+
+
 <!-- Jupyter Open External Links New Tab -->
 <script defer src="{{ '/assets/js/jupyter_new_tab.js' | relative_url | bust_file_cache }}"></script>
 

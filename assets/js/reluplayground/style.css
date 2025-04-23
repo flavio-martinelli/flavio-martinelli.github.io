@@ -1,0 +1,14 @@
+#canvas-container {
+    width: 720px;
+    height: 625px;
+    margin: 0 0 0 -10px;
+    border: 3px double #a7a7a7;
+    background: #fff;
+    position: relative;
+    overflow: hidden;
+}
+
+canvas {
+    display: block;
+    margin: 0 auto;
+}
