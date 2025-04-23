@@ -2,7 +2,7 @@
 layout: post
 title: "ReLU Playground: how complex are the dynamics of one neuron learning another one?"
 date: 2025-04-23 
-description: How complex are the dynamics of a single neuron learning another one? An interactive playground ⛹️‍♂️
+description: An interactive playground ⛹️‍♂️
 tags: learning dynamics
 categories: interactive
 load_relu_playground: true
@@ -15,7 +15,7 @@ load_relu_playground: true
 
 <link rel="stylesheet" href="/assets/js/reluplayground/style.css">
 <!-- <script src="https://cdn.jsdelivr.net/npm/p5@1.11.1/lib/p5.min.js"></script> -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/numjs/0.14.2/numjs.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/numjs/0.14.2/numjs.js"></script> -->
 <script src="/assets/js/reluplayground/drawUtils.js"></script> 
 <script src="/assets/js/reluplayground/utils.js"></script>
 <script src="/assets/js/reluplayground/explanations.js"></script> 
