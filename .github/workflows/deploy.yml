@@ -83,6 +83,7 @@ jobs:
         run: |
           pip3 install --upgrade jupyter
           export JEKYLL_ENV=production
+          bundle add webrick
           bundle exec jekyll build --trace
       - name: Purge unused CSS 🧹
         run: |
