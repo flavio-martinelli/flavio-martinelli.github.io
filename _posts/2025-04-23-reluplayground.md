@@ -5,6 +5,7 @@ date: 2025-04-23
 description: An interactive playground ⛹️‍♂️
 tags: learning dynamics
 categories: interactive
+thubnail: assets/img/posts/reluplayground.png
 load_relu_playground: true
 ---
 
