@@ -337,6 +337,10 @@ function drawAWPoint(){
     startW = abs(mt)/AWlimY;
     endW = AWlimX;
     // plot the line from startW to endW for the x coordinate and a=mt/w for the y coordinate
+    push();
+    beginClip();
+    rect(AWboxX, AWboxY, AWboxWidth, AWboxHeight);
+    endClip();
     res = 0.05;
     for (let i = startW; i < endW - res; i += res) {
         [x1, y1] = convertToAWBoxCoordinates(st*i, mt/i);
@@ -344,6 +348,7 @@ function drawAWPoint(){
         strokeWeight(2); stroke(teacherLabelColor);
         line(x1, y1, x2, y2);
     }
+    pop();
     push();
     stroke(2); strokeWeight(2); fill(studentLabelColor);
     if ((abs(ws) < AWlimX+0.1) & (abs(aS) < AWlimY+0.1)) {ellipse(xs, ys, 10);}

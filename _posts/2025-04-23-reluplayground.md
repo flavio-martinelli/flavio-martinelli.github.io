@@ -20,6 +20,7 @@ load_relu_playground: true
 <script src="/assets/js/reluplayground/drawUtils.js"></script> 
 <script src="/assets/js/reluplayground/utils.js"></script>
 <script src="/assets/js/reluplayground/explanations.js"></script> 
+<script src="/assets/js/reluplayground/option_inits.js"></script>
 <script src="/assets/js/reluplayground/interaction_input_boxes.js"></script> 
 <script src="/assets/js/reluplayground/interactions_output_space.js"></script> 
 <script src="/assets/js/reluplayground/buttons_and_visuals.js"></script>
