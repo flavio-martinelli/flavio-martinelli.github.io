@@ -9,6 +9,8 @@ var inputIOboxWidth = 60; // Horizontal size of input boxes
 var teacherLabelColor = '#FF6666';
 var studentLabelColor = '#6699FF';
 
+var currentOption = 'Option 1'; // Default option
+
 // Define graphics for the buttons
 
 function styleCircularButton(button, color) {
@@ -36,6 +38,40 @@ function setupButtons() {
     resetStudentButton(IOboxX + 10 + 50*2, 15); // reset student parameters button
     resetTrajectoryButton(IOboxX + 10 + 50*3, 15); // reset trajectory button
     setupLRSlider(IOboxX + 20 + 50*4, 35); // learning rate slider
+    displayDropdownMenu(540, 20); // dropdown menu
+}
+
+function displayDropdownMenu(x, y) {
+    setupDropdownMenu(x, y, menuOptions, option_initializer);
+    // display text left to the dropdown menu
+    createDiv('Load initialization:')
+        .position(x - 180, y -1)
+        .parent('canvas-container')
+        .style('font-size', '16px')
+        .style('color', '#000000')
+        .style('text-align', 'center') // Center the text horizontally
+        .style('width', '200px'); // Set a fixed width to ensure centering
+}
+
+// Setup the dropdown menu
+
+function setupDropdownMenu(x, y, options, onChangeCallback) {
+    let dropdown = createSelect();
+    dropdown.position(x, y).parent('canvas-container');
+    options.forEach(opt => dropdown.option(opt));
+    dropdown.changed(() => {
+        let value = dropdown.value();
+        currentOption = value; // Update the current option
+        if (onChangeCallback) onChangeCallback(value);
+        // mouseReleased(); // <-- Reset mouse state
+        // Programmatically trigger mouseup on the canvas to reset p5.js drag state
+        let canvas = document.querySelector('#canvas-container canvas');
+        if (canvas) {
+            let evt = new MouseEvent('mouseup', {bubbles: true});
+            canvas.dispatchEvent(evt);
+        }
+    });
+    return dropdown;
 }
 
 // Learn button
@@ -62,14 +98,7 @@ function resetStudentButton(x, y) {
     addTooltip(resetButton, "Reset student");
 }
 function resetStudentParameters() {
-    ks = 0.0;
-    ss = 1;
-    ms = 1.0;
-    cs = 0.0;
-    ws = 1;
-    bs = 0.0;
-    aS = 1.0;
-    rs = Math.abs(ws/aS);
+    optionInits[currentOption][1]();
 }
 function resetTeacherButton(x, y) {
     var resetButton = createButton('↺');
@@ -79,10 +108,7 @@ function resetTeacherButton(x, y) {
     addTooltip(resetButton, "Reset teacher");
 }
 function resetTeacherParameters() {
-    kt = 0.5;
-    st = 1;
-    mt = 0.5;
-    ct = -0.5;
+    optionInits[currentOption][0]();
 }
 
 // reset trajectory button
