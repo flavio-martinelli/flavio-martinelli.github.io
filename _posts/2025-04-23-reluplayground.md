@@ -7,6 +7,7 @@ tags: learning dynamics
 categories: interactive
 thumbnail: assets/img/posts/reluplayground.gif
 load_relu_playground: true
+og_image: assets/img/posts/reluplayground.png
 ---
 
 <!-- <h2>How complex are the dynamics of one neuron learning another one?</h2> -->
