@@ -9,7 +9,7 @@ var inputIOboxWidth = 60; // Horizontal size of input boxes
 var teacherLabelColor = '#FF6666';
 var studentLabelColor = '#6699FF';
 
-var currentOption = 'Option 1'; // Default option
+var currentOption = 'Home'; // Default option
 
 // Define graphics for the buttons
 
