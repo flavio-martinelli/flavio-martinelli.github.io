@@ -35,6 +35,27 @@ var trajectoryLag = 5;
 var trajectoryLagCount = 0;
 var learnActivated = false;
 
+// initialize colors
+var titleTextColor = 255;
+var backgroundBoxColor = 255;
+
+// set colors based on the theme
+function defineColorsOnTheme() {
+    var theme = document.documentElement.getAttribute('data-theme'); // Get the current theme from the body attribute
+    print("Current theme: " + theme);
+
+    if (theme === 'dark') {
+        backgroundColor = color(30);
+        titleTextColor = color(255);
+        backgroundBoxColor = color(90);
+    } else {
+        backgroundColor = color(255);
+        titleTextColor = color(0);
+        backgroundBoxColor = color(240);
+    }
+}
+
+
 function drawBoxes(){
     drawIOAxes();
     drawKMAxes();
@@ -71,7 +92,7 @@ function drawIOAxes(){
     // draw the box by computing the top-left and bottom-right coordinates
     [x1, y1] = convertToIOBoxCoordinates(-sqrt3, sqrt3);
     [x2, y2] = convertToIOBoxCoordinates(sqrt3, -sqrt3);
-    fill(240);
+    fill(backgroundBoxColor);
     rect(x1, y1, x2-x1, y2-y1);
     // draw x-axis in box coordinates
     [x, y] = convertToIOBoxCoordinates(-sqrt3, 0);
@@ -87,7 +108,7 @@ function drawKMAxes(){
     // draw the x and y axes in the box coordinates 
     // s = +1
     push(); 
-    strokeWeight(0); fill(240);
+    strokeWeight(0); fill(backgroundBoxColor);
     // draw the box by computing the top-left and bottom-right coordinates
     [x1, y1] = convertToKMBoxCoordinates(-KMlimX, KMlimY);
     [x2, y2] = convertToKMBoxCoordinates(KMlimX, -KMlimY);
@@ -102,7 +123,7 @@ function drawKMAxes(){
     pop();
     // s = -1
     push(); 
-    strokeWeight(0); fill(240);
+    strokeWeight(0); fill(backgroundBoxColor);
     [x1, y1] = convertToKMBoxCoordinates(-KMlimX, KMlimY, s=-1);
     [x2, y2] = convertToKMBoxCoordinates(KMlimX, -KMlimY, s=-1);
     rect(x1, y1, x2-x1, y2-y1);
@@ -121,7 +142,7 @@ function drawAWAxes(){
     // draw the box by computing the top-left and bottom-right coordinates
     [x1, y1] = convertToAWBoxCoordinates(-AWlimX, AWlimY);
     [x2, y2] = convertToAWBoxCoordinates(AWlimX, -AWlimY);
-    fill(240);
+    fill(backgroundBoxColor);
     rect(x1, y1, x2-x1, y2-y1);
     // draw x-axis in box coordinates
     [x, y] = convertToAWBoxCoordinates(-AWlimX, 0);
@@ -140,7 +161,7 @@ function drawWBAxes(){
     // draw the box by computing the top-left and bottom-right coordinates
     [x1, y1] = convertToWBBoxCoordinates(-WBlimX, WBlimY);
     [x2, y2] = convertToWBBoxCoordinates(WBlimX, -WBlimY);
-    fill(240);
+    fill(backgroundBoxColor);
     rect(x1, y1, x2-x1, y2-y1);
     // draw x-axis in box coordinates
     [x, y] = convertToWBBoxCoordinates(-WBlimX, 0);
@@ -172,7 +193,7 @@ function drawText(){
     // draw all necessary text
     push();
     textSize(15);
-    fill(0); stroke(0); strokeWeight(0.5);
+    fill(titleTextColor); stroke(titleTextColor); strokeWeight(0.5);
     textAlign(CENTER, CENTER);
     text("INPUT-OUTPUT SPACE", IOboxX + IOboxWidth / 2, IOboxY - 15);
     text("K-M SPACE ⋅ S = +1", KMboxX + KMboxWidth / 2, KMboxY - 15);

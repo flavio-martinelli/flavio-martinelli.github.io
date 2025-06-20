@@ -48,7 +48,7 @@ function displayDropdownMenu(x, y) {
         .position(x - 180, y -1)
         .parent('canvas-container')
         .style('font-size', '16px')
-        .style('color', '#000000')
+        .style('color', titleTextColor)
         .style('text-align', 'center') // Center the text horizontally
         .style('width', '200px'); // Set a fixed width to ensure centering
 }
@@ -270,7 +270,8 @@ function addTooltip(element, text) {
         .style('box-shadow', '0px 0px 10px rgba(0, 0, 0, 0.1)')
         .style('display', 'none')
         .style('z-index', '10')
-        .style('font-size', '11px'); // Set font size to 11 pixels
+        .style('font-size', '11px') // Set font size to 11 pixels
+        .style('color', '#000'); // Set text color to black
 
     element.mouseOver((evt) => {
         tooltip.style('display', 'block');

@@ -30,7 +30,9 @@ function mouseReleased() {
 }
 
 function draw() {
-    background(255);
+    defineColorsOnTheme();
+    
+    background(backgroundColor);
 
     drawText();
     drawBoxes();
