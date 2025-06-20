@@ -5,4 +5,5 @@ inline: true
 related_posts: false
 ---
 
+{% include labels/talk_label.html %}
 Gave a talk at the annual [Swiss Computational Neuroscience](https://www.swisscompneuro.org) meeting.
