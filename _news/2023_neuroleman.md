@@ -5,5 +5,4 @@ inline: true
 related_posts: false
 ---
 
-{% include labels/talk_label.html %}
-Best presentation award at the [NeuroLeman meeting](https://wp.unil.ch/lemanicneuroscience/annual-retreat/previous-retreats/) 🎖️
+{% include labels/talk_label.html %} Best presentation award at the [NeuroLeman meeting](https://wp.unil.ch/lemanicneuroscience/annual-retreat/previous-retreats/) 🎖️
