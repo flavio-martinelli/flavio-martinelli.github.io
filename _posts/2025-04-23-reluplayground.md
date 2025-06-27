@@ -12,7 +12,7 @@ og_image: assets/img/posts/reluplayground.png
 
 <!-- <h2>How complex are the dynamics of one neuron learning another one?</h2> -->
 <p>⚠️This page is under construction⚠️</p>
-<p>But in the meantime you can play with the relus by moving them around with the mouse, or type in some values. Press play to start learning!</p>
+<p>But in the meantime you can play with the relus by moving them around with the mouse, or type in some values, or move points the phase-spaces. Press play to start learning!</p>
 <p>Can you find which initialisations can converge to the teacher? How do other solutions look like? By looking at the different phase spaces, can you get an intuitive understanding of the learning dynamics?</p>
 
 
