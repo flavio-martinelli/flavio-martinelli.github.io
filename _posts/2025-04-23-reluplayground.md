@@ -15,8 +15,8 @@ og_image: assets/img/posts/reluplayground.png
 <p>But in the meantime you can play with the relus by moving them around with the mouse, or type in some values. Press play to start learning!</p>
 <p>Can you find which initialisations can converge to the teacher? How do other solutions look like? By looking at the different phase spaces, can you get an intuitive understanding of the learning dynamics?</p>
 
+
 <link rel="stylesheet" href="/assets/js/reluplayground/style.css">
-<!-- <script src="https://cdn.jsdelivr.net/npm/p5@1.11.1/lib/p5.min.js"></script> -->
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/numjs/0.14.2/numjs.js"></script> -->
 <script src="/assets/js/reluplayground/drawUtils.js"></script> 
 <script src="/assets/js/reluplayground/utils.js"></script>
@@ -31,6 +31,13 @@ og_image: assets/img/posts/reluplayground.png
 <div class="container">
     <div id="canvas-container"></div>
 </div>
+
+<strong>DETAILS:</strong>
+<ul> 
+<li>The student network is parameterized with 4 variables: f(x) =  a ReLU(wx + b) + c
+<li>We can transform the parameterization to make it phenomenologically intuitive, from 4 continuous variables to 3 continuous and 1 discrete. The kink of the relu is k=-b/w, while the slope is computed as m=a|w| and the direction of the relu is simply s=sign(w). c remains unchanged. The grey boxes show relu dynamics in different slices of the parameter space.
+<li>The teacher network is defined phenomenologically as t(x) = m  relu(s(x-k)) + c.
+<li>The 1D input data is densely sampled with a uniform distribution (std=1). There are no datapoints outside the grey area of the "INPUT-OUTPUT SPACE". This creates some interesting and under-explored boundary effects.
 
 <!-- TODOs:
 
