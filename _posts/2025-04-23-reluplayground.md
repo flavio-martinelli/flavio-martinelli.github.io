@@ -38,6 +38,7 @@ og_image: assets/img/posts/reluplayground.png
 <li>We can transform the parameterization to make it phenomenologically intuitive, from 4 continuous variables to 3 continuous and 1 discrete. The kink of the relu is k=-b/w, while the slope is computed as m=a|w| and the direction of the relu is simply s=sign(w). c remains unchanged. The grey boxes show relu dynamics in different slices of the parameter space.
 <li>The teacher network is defined phenomenologically as t(x) = m  relu(s(x-k)) + c.
 <li>The 1D input data is densely sampled with a uniform distribution (std=1). There are no datapoints outside the grey area of the "INPUT-OUTPUT SPACE". This creates some interesting and under-explored boundary effects.
+<li>Training is done through standard full-batch gradient descent.
 
 <!-- TODOs:
 
