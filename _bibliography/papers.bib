@@ -6,9 +6,9 @@
 @article{martinelli2025flat,
   title={Flat Channels to Infinity in Neural Loss Landscapes},
   author={Martinelli*, Flavio and Van Meegen*, Alexander and Simsek, Berfin and Gerstner, Wulfram and Brea, Johanni},
-  journal={arXiv preprint arXiv:2506.14951},
+  journal={NeurIPS},
   year={2025},
-  abbr={ArXiv},
+  abbr={NeurIPS},
   abstract={The loss landscapes of neural networks contain minima and saddle points that may be connected in flat regions or appear in isolation. We identify and characterize a special structure in the loss landscape: channels along which the loss decreases extremely slowly, while the output weights of at least two neurons, aᵢ and aⱼ, diverge to ±infinity, and their input weight vectors, 𝘄ᵢ and 𝘄ⱼ, become equal to each other. At convergence, the two neurons implement a gated linear unit: aᵢσ(𝘄ᵢ⋅x) + aⱼσ(𝘄ⱼ⋅x) → σ(𝘄⋅𝘅) + (𝘃⋅𝘅) σ'(𝘄⋅𝘅). Geometrically, these channels to infinity are asymptotically parallel to symmetry-induced lines of critical points. Gradient flow solvers, and related optimization methods like SGD or ADAM, reach the channels with high probability in diverse regression settings, but without careful inspection they look like flat local minima with finite parameter values. Our characterization provides a comprehensive picture of these quasi-flat regions in terms of gradient dynamics, geometry, and functional interpretation. The emergence of gated linear units at the end of the channels highlights a surprising aspect of the computational capabilities of fully connected layers.},
   bibtex_show={true},
   selected={true},
@@ -18,18 +18,47 @@
   preview={channels.png}
 }
 
-@article{huang2024measuring,
+@article{portner2024actor,
+  title={Actor-Critic Networks with Analogue Memristors Mimicking Reward-Based Learning},
+  author={Portner*, Kevin and Zellweger*, Till and Martinelli, Flavio and B{\'e}gon-Lours, Laura and Bragaglia, Valeria and Weilenmann, Christoph and Jubin, Daniel and Falcone, Donato and Hermann, Felix and Hrynkevych, Oscar and Stecconi, Tommaso and La Porta, Antonio and Drechsler, Ute and Olziersky, Antonis and Offrein, Bert and Gerstner, Wulfram and Luisier, Mathieu and Emboras, Alexandros},
+  year={2025},
+  bibtex_show={true},
+  abbr={Nature Machine Intelligence},
+  selected={false},
+  html={https://www.nature.com/articles/s42256-025-01149-w},
+  doi={https://doi.org/10.1038/s42256-025-01149-w},
+  code={},
+  preview={almond1.png},
+  abstract={Advancements in memristive devices have given rise to a new generation of specialized hardware for bio-inspired computing. However, the majority of these implementations only draw partial inspiration from the architecture and functionalities of the mammalian brain. Moreover, the use of memristive hardware is typically restricted to specific elements within the learning algorithm, leaving computationally expensive operations to be executed in software. Here, we demonstrate actor-critic temporal difference (TD) learning on analogue memristors, mirroring the principles of reward-based learning in a neural network architecture similar to the one found in biology. Within the learning algorithm, memristors are used as multi-purpose elements: They act as synaptic weights that are trained online, they calculate the weight updates directly in hardware, and they compute the actions for navigating through the environment. Thanks to these features, weight training can take place entirely in-memory, eliminating the need for data movement and enhancing processing speed. Also, our proposed learning scheme possesses self-correction capabilities that effectively counteract noise during the weight update process, which makes it a promising alternative to traditional error mitigation schemes. We test our framework on two classic navigation tasks - the T-maze and the Morris water-maze - using analogue memristors based on the valence change memory (VCM) effect. Our approach represents a first step towards fully in-memory, online, and error-resilient neuromorphic computing engines based on bio-inspired learning schemes.},
+  annotation={* equal first author contribution}
+}
+
+@article{huang2025measuring,
   title={Measuring and controlling solution degeneracy across task-trained recurrent neural networks},
   author={Huang, Ann and Singh, Satpreet H and Martinelli, Flavio and Rajan, Kanaka},
-  journal={arXiv preprint arXiv:2410.03972},
-  year={2024},
-  abbr={ArXiv},
+  journal={NeurIPS},
+  year={2025},
+  abbr={NeurIPS},
   abstract={Task-trained recurrent neural networks (RNNs) are widely used in neuroscience and machine learning to model dynamical computations. To gain mechanistic insight into how neural systems solve tasks, prior work often reverse-engineers individual trained networks. However, different RNNs trained on the same task and achieving similar performance can exhibit strikingly different internal solutions-a phenomenon known as solution degeneracy. Here, we develop a unified framework to systematically quantify and control solution degeneracy across three levels: behavior, neural dynamics, and weight space. We apply this framework to 3,400 RNNs trained on four neuroscience-relevant tasks-flip-flop memory, sine wave generation, delayed discrimination, and path integration-while systematically varying task complexity, learning regime, network size, and regularization. We find that higher task complexity and stronger feature learning reduce degeneracy in neural dynamics but increase it in weight space, with mixed effects on behavior. In contrast, larger networks and structural regularization reduce degeneracy at all three levels. These findings empirically validate the Contravariance Principle and provide practical guidance for researchers aiming to tailor RNN solutions-whether to uncover shared neural mechanisms or to model individual variability observed in biological systems. This work provides a principled framework for quantifying and controlling solution degeneracy in task-trained RNNs, offering new tools for building more interpretable and biologically grounded models of neural computation.},
   bibtex_show={true},
   selected={false},
-  html={https://arxiv.org/abs/2410.03972},
+  html={https://pmc.ncbi.nlm.nih.gov/articles/PMC12148090/},
   doi={https://doi.org/10.48550/arXiv.2410.03972},
   preview={degeneracy.png}
+}
+
+@article{beiser2025data,
+  title={Data Augmentation Techniques to Reverse-Engineer Neural Network Weights from Input-Output Queries},
+  author={Beiser, Alexander and Martinelli, Flavio and Gerstner, Wulfram and Brea, Johanni},
+  journal={arXiv preprint arXiv:2511.20312},
+  year={2025},
+  abbr={NeurIPS UniReps},
+  abstract={Network weights can be reverse-engineered given enough informative samples of a network's input-output function. In a teacher-student setup, this translates into collecting a dataset of the teacher mapping -- querying the teacher -- and fitting a student to imitate such mapping. A sensible choice of queries is the dataset the teacher is trained on. But current methods fail when the teacher parameters are more numerous than the training data, because the student overfits to the queries instead of aligning its parameters to the teacher. In this work, we explore augmentation techniques to best sample the input-output mapping of a teacher network, with the goal of eliciting a rich set of representations from the teacher hidden layers. We discover that standard augmentations such as rotation, flipping, and adding noise, bring little to no improvement to the identification problem. We design new data augmentation techniques tailored to better sample the representational space of the network's hidden layers. With our augmentations we extend the state-of-the-art range of recoverable network sizes. To test their scalability, we show that we can recover networks of up to 100 times more parameters than training data-points.},
+  bibtex_show={true},
+  selected={false},
+  html={https://arxiv.org/abs/2511.20312},
+  doi={https://arxiv.org/abs/2511.20312},
+  preview={unireps25.png}
 }
 
 @inproceedings{martinelli2023expand,
@@ -98,21 +127,5 @@
   code={https://github.com/jbrea/MLPGradientFlow.jl},
   preview={MLPGradientFlow.png},
   abstract={MLPGradientFlow is a software package to solve numerically the gradient flow differential equation θ ̇ = −∇L(θ; D), where θ are the parameters of a multi-layer perceptron, D is some data set, and ∇L is the gradient of a loss function. We show numerically that adaptive first- or higher-order integration methods based on Runge-Kutta schemes have better accuracy and convergence speed than gradient descent with the Adam optimizer. However, we find Newton’s method and approximations like BFGS preferable to find fixed points (local and global minima of L) efficiently and accurately. For small networks and data sets, gradients are usually computed faster than in pytorch and Hessian are computed at least 5× faster. Additionally, the package features an integrator for a teacher-student setup with bias-free, two-layer networks trained with standard Gaussian input in the limit of infinite data. The code is accessible at https://github.com/jbrea/MLPGradientFlow.jl.}
-}
-
-
-@article{portner2024actor,
-  title={Actor-Critic Networks with Analogue Memristors Mimicking Reward-Based Learning},
-  author={Portner*, Kevin and Zellweger*, Till and Martinelli, Flavio and B{\'e}gon-Lours, Laura and Bragaglia, Valeria and Weilenmann, Christoph and Jubin, Daniel and Falcone, Donato and Hermann, Felix and Hrynkevych, Oscar and Stecconi, Tommaso and La Porta, Antonio and Drechsler, Ute and Olziersky, Antonis and Offrein, Bert and Gerstner, Wulfram and Luisier, Mathieu and Emboras, Alexandros},
-  year={2024},
-  bibtex_show={true},
-  abbr={Preprint},
-  selected={false},
-  html={https://www.researchsquare.com/article/rs-3993700/v1},
-  doi={https://doi.org/10.21203/rs.3.rs-3993700/v1},
-  code={},
-  preview={almond1.png},
-  abstract={Advancements in memristive devices have given rise to a new generation of specialized hardware for bio-inspired computing. However, the majority of these implementations only draw partial inspiration from the architecture and functionalities of the mammalian brain. Moreover, the use of memristive hardware is typically restricted to specific elements within the learning algorithm, leaving computationally expensive operations to be executed in software. Here, we demonstrate actor-critic temporal difference (TD) learning on analogue memristors, mirroring the principles of reward-based learning in a neural network architecture similar to the one found in biology. Within the learning algorithm, memristors are used as multi-purpose elements: They act as synaptic weights that are trained online, they calculate the weight updates directly in hardware, and they compute the actions for navigating through the environment. Thanks to these features, weight training can take place entirely in-memory, eliminating the need for data movement and enhancing processing speed. Also, our proposed learning scheme possesses self-correction capabilities that effectively counteract noise during the weight update process, which makes it a promising alternative to traditional error mitigation schemes. We test our framework on two classic navigation tasks - the T-maze and the Morris water-maze - using analogue memristors based on the valence change memory (VCM) effect. Our approach represents a first step towards fully in-memory, online, and error-resilient neuromorphic computing engines based on bio-inspired learning schemes.},
-  annotation={* equal first author contribution}
 }
 

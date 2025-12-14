@@ -10,5 +10,17 @@
   url: https://icml.cc/
   color: "#1e88e5"
 
+"NeurIPS":
+  url: https://nips.cc/
+  color: "#1e88e5"
+
+"Nature Machine Intelligence":
+  url: https://www.nature.com/natmachintell/
+  color: "#228B22"
+
 "Preprint":
   color: "#90ee90"
+
+"NeurIPS UniReps":
+  url: https://unireps.org/
+  color: "#b31b1b"
