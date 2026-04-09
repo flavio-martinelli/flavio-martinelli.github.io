@@ -34,6 +34,8 @@ function drawParallelControlsArrows(p) {
     const tip2X = centerX + radius * Math.cos(theta + Math.PI);
     const tip2Y = centerY + radius * Math.sin(theta + Math.PI);
 
+    const greenTailLength = radius * 3; // tail sits near/just outside the dashed circle
+
     const hoverRadius = 14;
 
     p.push();
@@ -52,10 +54,26 @@ function drawParallelControlsArrows(p) {
     const uy = Math.sin(uAngle);
     const mainLength = 350; // sufficiently large base offset so arrows appear to originate off-canvas
 
-    const base1X = tip1X - ux * mainLength;
-    const base1Y = tip1Y - uy * mainLength;
-    const base2X = tip2X - ux * mainLength;
-    const base2Y = tip2Y - uy * mainLength;
+    const tailX = centerX - ux * greenTailLength;
+    const tailY = centerY - uy * greenTailLength;
+
+    let blackBlend = 0;
+    if (window.limitMode === 'approx') {
+        const epsilon = (typeof window.epsilon === 'number') ? window.epsilon : 0.1;
+        if (epsilon > 0.01) {
+            blackBlend = Math.min(1, Math.max(0, Math.log10(epsilon / 0.01) / 2));
+        }
+    }
+
+    const parallelBase1X = tip1X - ux * mainLength;
+    const parallelBase1Y = tip1Y - uy * mainLength;
+    const parallelBase2X = tip2X - ux * mainLength;
+    const parallelBase2Y = tip2Y - uy * mainLength;
+
+    const base1X = parallelBase1X + (tailX - parallelBase1X) * blackBlend;
+    const base1Y = parallelBase1Y + (tailY - parallelBase1Y) * blackBlend;
+    const base2X = parallelBase2X + (tailX - parallelBase2X) * blackBlend;
+    const base2Y = parallelBase2Y + (tailY - parallelBase2Y) * blackBlend;
 
     drawArrow(p, base1X, base1Y, tip1X, tip1Y, { color: '#323232', weight: 3, headSize: 12 });
     drawArrow(p, base2X, base2Y, tip2X, tip2Y, { color: '#323232', weight: 3, headSize: 12 });
@@ -65,22 +83,19 @@ function drawParallelControlsArrows(p) {
     p.fill(0);
     p.textSize(16);
     const labelAngleDeg = (state.labelAngleDeg !== undefined && state.labelAngleDeg !== null) ? state.labelAngleDeg : 90;
-    const labelAngle = uAngle + labelAngleDeg * Math.PI / 180;
+    const labelAngle1 = Math.atan2(tip1Y - base1Y, tip1X - base1X) + labelAngleDeg * Math.PI / 180;
+    const labelAngle2 = Math.atan2(tip2Y - base2Y, tip2X - base2X) + labelAngleDeg * Math.PI / 180;
     const labelOffset = 18; // px away from tip along the chosen angle
-    const label1X = tip1X + Math.cos(labelAngle) * labelOffset;
-    const label1Y = tip1Y + Math.sin(labelAngle) * labelOffset;
-    const label2X = tip2X + Math.cos(labelAngle) * labelOffset;
-    const label2Y = tip2Y + Math.sin(labelAngle) * labelOffset;
+    const label1X = tip1X + Math.cos(labelAngle1) * labelOffset;
+    const label1Y = tip1Y + Math.sin(labelAngle1) * labelOffset;
+    const label2X = tip2X + Math.cos(labelAngle2) * labelOffset;
+    const label2Y = tip2Y + Math.sin(labelAngle2) * labelOffset;
     p.textAlign(p.CENTER, p.CENTER);
     p.text('w₁', label1X, label1Y);
     p.text('w₂', label2X, label2Y);
 
     // --- draw the green reference arrow whose TIP is fixed at the center ---
     // green arrow tail placed along -u from center
-    const greenTailLength = radius * 3; // tail sits near/just outside the dashed circle
-    const tailX = centerX - ux * greenTailLength;
-    const tailY = centerY - uy * greenTailLength;
-
     // draw green arrow via helper (head at center)
     drawArrow(p, tailX, tailY, centerX, centerY, { color: '#27b562', weight: 3, headSize: 12 });
 

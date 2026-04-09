@@ -35,7 +35,7 @@ function setup() {
     window.surface = surface;
     
     // Set isometric camera view with Z-axis pointing up
-    const distance = 1250;
+    const distance = 1350;
     const angle = Math.PI / 5; 
     const dx = -60;  // backwards
     const dy = -50;  // left

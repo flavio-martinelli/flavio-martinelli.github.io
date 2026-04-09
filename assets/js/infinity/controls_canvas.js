@@ -5,6 +5,10 @@ function controlsSketch(p) {
     // store canvas and density in the closure for resize handling
     let cnv = null;
     let currentDensity = 1;
+    window.controlsCanvasP5 = p;
+    window.redrawControlsCanvas = function() {
+        if (window.controlsCanvasP5) window.controlsCanvasP5.redraw();
+    };
     p.setup = function() {
         const parentEl = document.getElementById('controls-container');
         if (!parentEl) return;

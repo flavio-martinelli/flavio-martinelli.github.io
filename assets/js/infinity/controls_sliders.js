@@ -162,6 +162,7 @@ function setupControlsSliders() {
             window.a1a2diff = newDiff;
             // update gamma controls (they store exponent) safely
             safeSetControl(gSlider, gInput, newDiff, formatGamma, true);
+            if (typeof window.redrawControlsCanvas === 'function') window.redrawControlsCanvas();
             if (window.surface && typeof window.surface.generatePoints === 'function') window.surface.generatePoints();
         });
         eInput.addEventListener('input', () => {
@@ -175,6 +176,7 @@ function setupControlsSliders() {
                 const newDiff = Math.max(1e-12, aVal / clamped);
                 window.a1a2diff = newDiff;
                 safeSetControl(gSlider, gInput, newDiff, formatGamma, true);
+                if (typeof window.redrawControlsCanvas === 'function') window.redrawControlsCanvas();
                 if (window.surface && typeof window.surface.generatePoints === 'function') window.surface.generatePoints();
             }
         });
@@ -198,6 +200,7 @@ function setupControlsSliders() {
             const recip = Math.max(1e-12, aVal / v);
             window.epsilon = recip;
             safeSetControl(eSlider, eInput, recip, formatEps, true);
+            if (typeof window.redrawControlsCanvas === 'function') window.redrawControlsCanvas();
             if (window.surface && typeof window.surface.generatePoints === 'function') window.surface.generatePoints();
         });
         gInput.addEventListener('input', () => {
@@ -211,6 +214,7 @@ function setupControlsSliders() {
                     const recip = Math.max(1e-12, aVal / clamped);
                 window.epsilon = recip;
                 safeSetControl(eSlider, eInput, recip, formatEps, true);
+                    if (typeof window.redrawControlsCanvas === 'function') window.redrawControlsCanvas();
                 if (window.surface && typeof window.surface.generatePoints === 'function') window.surface.generatePoints();
             }
         });

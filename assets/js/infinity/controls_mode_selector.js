@@ -47,6 +47,7 @@
                     }
                     if (typeof window.surface.generatePoints === 'function') window.surface.generatePoints();
                 }
+                if (typeof window.redrawControlsCanvas === 'function') window.redrawControlsCanvas();
             }
 
             dot.addEventListener('click', select);
