@@ -52,6 +52,18 @@
 <script src="/assets/js/reluplayground/sketch.js" defer></script>
 {% endif %}
 
+{% if page.load_infinity %}
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.1/lib/p5.min.js"></script>
+        <script src="/assets/js/infinity/helper.js" defer></script>
+        <script src="/assets/js/infinity/axes.js" defer></script>
+        <script src="/assets/js/infinity/surface3d.js" defer></script>
+        <script src="/assets/js/infinity/controls_parallel_arrows.js" defer></script>
+        <script src="/assets/js/infinity/controls_sliders.js" defer></script>
+        <script src="/assets/js/infinity/controls_mode_selector.js" defer></script>
+        <script src="/assets/js/infinity/sketch.js" defer></script>
+        <script src="/assets/js/infinity/controls_canvas.js" defer></script>
+{% endif %}
+
 <!-- Jupyter Open External Links New Tab -->
 <script defer src="{{ '/assets/js/jupyter_new_tab.js' | relative_url | bust_file_cache }}"></script>
 
