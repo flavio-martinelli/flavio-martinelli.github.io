@@ -13,7 +13,7 @@
   {% endunless %}
 
   <li class="my-2">
-    <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a>
+    <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="{{ post.url }}">{{ post.title }}</a>
   </li>
 {% endfor %}
 {% if site.newsletter.enabled and site.footer_fixed %}
