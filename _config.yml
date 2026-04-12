@@ -10,7 +10,7 @@ email: flavio.martinelli@epfl.ch
 description: > # the ">" symbol means to ignore newlines until "footer_text:"
   Webpage of Flavio Martinelli
 footer_text: >
-keywords: neural network theory, loss landscapes, overparameterization, identifiability, computational neuroscience, EPFL, deep learning theory # add your own keywords or leave empty
+keywords: # add your own keywords or leave empty
 lang: en # the language of your site (for example: en, fr, cn, ru, etc.)
 icon: brain.svg # the emoji used as the favicon (alternatively, provide image name in /assets/img/)
 # 🧠
@@ -188,6 +188,7 @@ collections:
   news:
     defaults:
       layout: post
+      sitemap: false
     output: true
     permalink: /news/:path/
   projects:

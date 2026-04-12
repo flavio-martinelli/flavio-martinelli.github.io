@@ -3,6 +3,7 @@ layout: about
 title: Home
 permalink: /
 subtitle: <a href='https://people.epfl.ch/flavio.martinelli?lang=en'>EPFL</a>, Lausanne, Switzerland (CH)
+description: "PhD student at EPFL researching how neural networks work. Interested in identifiability, trainability, and interpretability through loss landscape theory."
 
 profile:
   align: right
