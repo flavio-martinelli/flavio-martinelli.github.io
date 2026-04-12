@@ -8,6 +8,7 @@ categories: interactive
 thumbnail: assets/img/posts/reluplayground.gif
 load_relu_playground: true
 og_image: assets/img/posts/reluplayground.png
+keywords: ReLU, gradient descent dynamics, neural network visualization, learning dynamics, single neuron, phase space, interactive demo, playground, tensorflowplayground, deep learning, machine learning, learning
 ---
 
 <!-- <h2>How complex are the dynamics of one neuron learning another one?</h2> -->
