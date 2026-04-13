@@ -14,5 +14,7 @@ assets/js/reluplayground/
 _news/
 _includes/labels/
 _includes/latest_posts.liquid
+_includes/scripts/misc.liquid
+_pages/about.md
 _pages/blog.md
 .github/workflows/
