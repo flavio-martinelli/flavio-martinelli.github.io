@@ -11,8 +11,8 @@ nav_order: 2
 
 <!-- _pages/publications.md -->
 
- <!-- papers section. There could be a preprint section and a thesis and a workshop and a blog ... -->
-<div class="publications"> 
+<!-- papers section. There could be a preprint section and a thesis and a workshop and a blog ... -->
+<div class="publications">
 
 {% bibliography %}
 
