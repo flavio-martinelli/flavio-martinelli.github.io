@@ -188,7 +188,6 @@ collections:
   news:
     defaults:
       layout: post
-      sitemap: false
     output: true
     permalink: /news/:path/
   projects:
@@ -272,6 +271,11 @@ plugins:
 defaults:
   - scope:
       path: "assets"
+    values:
+      sitemap: false
+  - scope:
+      path: ""
+      type: "news"
     values:
       sitemap: false
 
