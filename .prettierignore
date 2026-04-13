@@ -15,3 +15,4 @@ _news/
 _includes/labels/
 _includes/latest_posts.liquid
 _pages/blog.md
+.github/workflows/
