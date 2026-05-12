@@ -4,14 +4,16 @@
 // selected papers go on top in order of appearence!!
 
 @article{martinelli2026lottery,
-  title={On the lottery metaphor and escape dimensions to explain the success of overparameterization},
+  title={The Puzzling Success of Overparameterization: Lottery Tickets or Escape Dimensions?},
   author={Martinelli, Flavio and Brea, Johanni and Gerstner, Wulfram},
   year={2026},
+  note={Preprint, EPFL Infoscience},
+  doi={10.5075/epfl.20.500.14299/263577},
+  html={https://infoscience.epfl.ch/handle/20.500.14299/263577},
   abbr={Preprint},
-  abstract={The lottery ticket hypothesis is often used as a didactical analogy to explain the success of overparameterized neural networks: “larger networks succeed because they more likely contain a well-initialized subnetwork that can learn the task in isolation, much like buying more tickets increases the chances of winning a lottery.” This explanation is intuitive but misleading: it suggests that subnetworks can be treated in isolation from the rest of the network. Following this reasoning leads to interpreting learning in wide networks as a multi-start optimization process, where gradient descent simply conducts a parallel search over subnetworks. We argue that this view is flawed since, among other reasons, winning tickets can be made to fail by perturbing the rest of the network. We put forward a more accurate intuitive picture for the success of overparameterized networks based on the geometry of the loss landscape: increasing width expands the set of available dimensions for optimization, making it easier to escape bad local minima. Moreover, as width grows, bad minima become increasingly rare relative to good minima, leading to a higher likelihood of convergence to good solutions. As the field grows more mature, it is important to refine the analogies we use to explain foundational phenomena, such as the apparent redundancy of large networks, reconciling practitioners' intuitions with modern theoretical insights.},
-  bibtex_show={false},
+  abstract={Lotteries and tickets are often used as a didactical analogy to explain the success of overparameterized neural networks: “larger networks succeed because they more likely contain a well-initialized subnetwork that can learn the task in isolation, much like buying more tickets increases the chances of winning a lottery.” This explanation is intuitive but misleading: it suggests that subnetworks can be treated in isolation from the rest of the network. Following this reasoning leads to interpreting learning in wide networks as a multi-start optimization process, where gradient descent simply conducts a parallel search over subnetworks. We argue that this view is flawed since, among other reasons, winning tickets can be made to fail by perturbing the rest of the network. We put forward a more accurate intuitive picture for the success of overparameterization based on the geometry of loss landscapes: increasing width expands the set of available dimensions for optimization, making it easier to escape bad local minima. Moreover, as width grows, bad minima become increasingly rare relative to good minima. As the field grows mature, it is important to refine the analogies we use to explain foundational phenomena, such as the apparent redundancy of large networks, reconciling practitioners' intuitions with modern theoretical insights.},
+  bibtex_show={true},
   selected={true},
-  html={https://flavio-martinelli.github.io/blog/2026/lottery/},
   preview={edt.png}
 }
 
@@ -27,6 +29,7 @@
   annotation={* equal first author contribution},
   html={https://arxiv.org/abs/2506.14951},
   doi={https://doi.org/10.48550/arXiv.2506.14951},
+  code={https://github.com/flavio-martinelli/channels-to-infinity},
   preview={channels.png}
 }
 
@@ -40,7 +43,7 @@
   selected={false},
   html={https://www.nature.com/articles/s42256-025-01149-w},
   doi={https://doi.org/10.1038/s42256-025-01149-w},
-  code={},
+  code={https://github.com/ztill/TD_learning_on_memristors/},
   preview={almond1.png},
   abstract={Advancements in memristive devices have given rise to a new generation of specialized hardware for bio-inspired computing. However, the majority of these implementations only draw partial inspiration from the architecture and functionalities of the mammalian brain. Moreover, the use of memristive hardware is typically restricted to specific elements within the learning algorithm, leaving computationally expensive operations to be executed in software. Here, we demonstrate actor-critic temporal difference (TD) learning on analogue memristors, mirroring the principles of reward-based learning in a neural network architecture similar to the one found in biology. Within the learning algorithm, memristors are used as multi-purpose elements: They act as synaptic weights that are trained online, they calculate the weight updates directly in hardware, and they compute the actions for navigating through the environment. Thanks to these features, weight training can take place entirely in-memory, eliminating the need for data movement and enhancing processing speed. Also, our proposed learning scheme possesses self-correction capabilities that effectively counteract noise during the weight update process, which makes it a promising alternative to traditional error mitigation schemes. We test our framework on two classic navigation tasks - the T-maze and the Morris water-maze - using analogue memristors based on the valence change memory (VCM) effect. Our approach represents a first step towards fully in-memory, online, and error-resilient neuromorphic computing engines based on bio-inspired learning schemes.},
   annotation={* equal first author contribution}
