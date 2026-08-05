@@ -61,6 +61,7 @@ function drawBoxes(){
     drawKMAxes();
     drawAWAxes();
     drawWBAxes();
+    drawReentryShading();
     logTrajectory();
     drawKMTrajectory();
     drawAWTrajectory();
@@ -478,3 +479,63 @@ function drawWBTrajectory(){
     pop();
 }
 
+function drawReentryShading() {
+    var errors = computeError(data, kt, st, mt, ct, ws, bs, aS, cs);
+    var Ed  = nj.mean(errors);
+    var Edx = nj.mean(errors.multiply(data));
+    var R = sqrt3;
+
+    push();
+    beginClip(); rect(WBboxX, WBboxY, WBboxWidth, WBboxHeight); endClip();
+    strokeWeight(3);
+
+    for (let wSign of [1, -1]) {
+        // Cone-edge tinting at k = -R:
+        //   k̇|_{k=-R} ∝ a · (E[δ] - R · sign(w) · E[δx])
+        var kdotEdge = aS * (Ed - R * wSign * Edx);
+        if (kdotEdge > 0) stroke(0, 180, 80, 25);    // GREEN: permeable (re-entry)
+        else              stroke(220, 60, 60, 25);   // RED:   trapping
+        var [x1, y1] = convertToWBBoxCoordinates(0, 0);
+        var [x2, y2] = convertToWBBoxCoordinates(wSign * WBlimX, R * WBlimX);
+        line(x1, y1, x2, y2);
+
+        // Internal fixed point k* = -E[δ] / (sign(w) · E[δx]).
+        // Skip if E[δx] ≈ 0 (no linear residual along this direction).
+        if (Math.abs(Edx) < 1e-8) continue;
+        var kStar = -Ed / (wSign * Edx);
+        // Only draw when k* lies inside the always-on cone (k* < -R).
+        // if (kStar >= -R) continue;
+
+        // Stability: ∂k̇/∂k ∝ a · sign(w) · E[δx].
+        var slope = aS * wSign * Edx;
+        if (slope < 0) stroke(60, 120, 220, 25);   // BLUE:   attractive (stable)
+        else           stroke(230, 150, 30, 25);   // ORANGE: repulsive (unstable)
+        strokeWeight(2);
+        var [xa, ya] = convertToWBBoxCoordinates(0, 0);
+        var [xb, yb] = convertToWBBoxCoordinates(wSign * WBlimX, -kStar * WBlimX);
+        line(xa, ya, xb, yb);
+        strokeWeight(3);
+    }
+
+    // best linear approximation target, to be shown only inside the cone defined by k = -R:
+    if (Math.abs(aS) > 1e-6){
+        var Ex2 = nj.mean(data.multiply(data));  // E[x²]
+        var wTarget = ws - Edx / (aS * Ex2);
+        var bTarget = bs - Ed / aS;
+        var kTarget = -bTarget / wTarget;
+        if (Math.abs(wTarget) < WBlimX && Math.abs(bTarget) < WBlimY) {
+            var [xt, yt] = convertToWBBoxCoordinates(wTarget, bTarget);
+            push();
+            if ((kTarget < -R) || (kTarget > R)) stroke(160, 60, 200);
+            else stroke(160, 60, 200, 15);   // PURPLE: instantaneous saddle target
+            strokeWeight(2); noFill();
+            ellipse(xt, yt, 10);
+            line(xt - 5, yt, xt + 5, yt);
+            line(xt, yt - 5, xt, yt + 5);
+            pop();
+        }
+    }
+
+
+    pop();
+}
