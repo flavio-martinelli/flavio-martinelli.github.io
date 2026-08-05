@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "AXIOM workshop @ NeurIPS: Foundations of Efficient Deep Learning"
+title: "AXIOM workshop NeurIPS: Foundations of Efficient Deep Learning"
 date: 2026-08-01
 inline: true
 related_posts: false
