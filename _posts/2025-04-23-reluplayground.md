@@ -18,16 +18,6 @@ keywords: ReLU, gradient descent dynamics, neural network visualization, learnin
 
 
 <link rel="stylesheet" href="/assets/js/reluplayground/style.css">
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/numjs/0.14.2/numjs.js"></script> -->
-<script src="/assets/js/reluplayground/drawUtils.js"></script> 
-<script src="/assets/js/reluplayground/utils.js"></script>
-<script src="/assets/js/reluplayground/explanations.js"></script> 
-<script src="/assets/js/reluplayground/option_inits.js"></script>
-<script src="/assets/js/reluplayground/interaction_input_boxes.js"></script> 
-<script src="/assets/js/reluplayground/interactions_output_space.js"></script> 
-<script src="/assets/js/reluplayground/buttons_and_visuals.js"></script>
-<script src="/assets/js/reluplayground/ml.js"></script>
-<script src="/assets/js/reluplayground/sketch.js"></script>
 
 <div class="container">
     <div id="canvas-container"></div>

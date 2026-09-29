@@ -1,28 +1,38 @@
 var sqrt3 = Math.sqrt(3);
 
 var IOboxX = 25;  // absolute x-coordinate of the IObox
-var IOboxY = 265; // absolute y-coordinate of the IObox
+var IOboxY = 285; // absolute y-coordinate of the IObox
 var IOboxWidth = 330;
 var IOboxHeight = 330;
 
-var AWboxX = 2.5*IOboxX + IOboxWidth;  // absolute x-coordinate of the a-w box
-var AWboxY = 100; // absolute y-coordinate of the a-w box
+var rightColumnShift = 13; // extra space between the input-output space and the right column
+
+var AWboxX = 2.5*IOboxX + IOboxWidth + rightColumnShift;  // absolute x-coordinate of the a-w box
+var AWboxY = 200; // absolute y-coordinate of the a-w box
 var AWboxWidth = 140;
 var AWboxHeight = 140;
 var AWlimX = 1.5;
 var AWlimY = 1.5;
 
-var WBboxX = 2.5*IOboxX + IOboxWidth + 150;  // absolute x-coordinate of the WBbox
+var WBboxX = 2.5*IOboxX + IOboxWidth + rightColumnShift + 150;  // absolute x-coordinate of the WBbox
 var WBboxY = AWboxY; // absolute y-coordinate of the WBbox
 var WBboxWidth = 140;
 var WBboxHeight = 140;
 var WBlimX = 1.5;
 var WBlimY = 1.5;
 
-var KMboxX = 2.5*IOboxX + IOboxWidth + 25;  // absolute x-coordinate of the kink-slope box
-var KMboxY = AWboxY + 200; // absolute y-coordinate of the kink-slope box
+var LossboxX = 2.5*IOboxX + IOboxWidth + rightColumnShift + 25;  // absolute x-coordinate of the loss box (aligned with the K-M box)
+var LossboxY = 83; // absolute y-coordinate of the loss box
+var LossboxWidth = 250; // same width as the K-M box
+var LossboxHeight = 75;
+var lossTraces = []; // one array of loss values per learning run, the last one is the current run
+var lossRunActive = false; // false after a student reset: the next learning step starts a new trace
+
+var KMboxX = 2.5*IOboxX + IOboxWidth + rightColumnShift + 25;  // absolute x-coordinate of the kink-slope box
+var KMboxY = AWboxY + 185; // absolute y-coordinate of the kink-slope box
 var KMboxWidth = 250;
-var KMboxHeight = 125;
+var KMboxHeight = 100;
+var KMgap = 30; // vertical gap between the s=+1 and s=-1 K-M boxes
 var KMlimX = sqrt3;
 var KMlimY = 2.5;
 
@@ -42,7 +52,6 @@ var backgroundBoxColor = 255;
 // set colors based on the theme
 function defineColorsOnTheme() {
     var theme = document.documentElement.getAttribute('data-theme'); // Get the current theme from the body attribute
-    print("Current theme: " + theme);
 
     if (theme === 'dark') {
         backgroundColor = color(30);
@@ -57,11 +66,16 @@ function defineColorsOnTheme() {
 
 
 function drawBoxes(){
+    hoverItems = [];
     drawIOAxes();
     drawKMAxes();
     drawAWAxes();
     drawWBAxes();
+    updateOutcomeMaps();
+    drawOutcomeMaps();
     drawReentryShading();
+    logLoss();
+    drawLossPlot();
     logTrajectory();
     drawKMTrajectory();
     drawAWTrajectory();
@@ -186,6 +200,12 @@ function drawWBAxes(){
         [x2, y2] = convertToWBBoxCoordinates(i+res, sqrt3 * (i+res));
         line(x1, y1, x2, y2);
     }
+    // lower halves: edges of the dead cone (the upper halves get their tooltip in drawReentryShading)
+    for (let wSign of [1, -1]) {
+        var [ox, oy] = convertToWBBoxCoordinates(0, 0);
+        var [ex, ey] = convertToWBBoxCoordinates(wSign * WBlimX, -sqrt3 * WBlimX);
+        hoverItems.push({x1: ox, y1: oy, x2: ex, y2: ey, priority: 1, text: '\\(b = -\\sqrt{3}\\,|w|\\)'});
+    }
 
     pop();
 }
@@ -198,9 +218,17 @@ function drawText(){
     textAlign(CENTER, CENTER);
     text("INPUT-OUTPUT SPACE", IOboxX + IOboxWidth / 2, IOboxY - 15);
     text("K-M SPACE ⋅ S = +1", KMboxX + KMboxWidth / 2, KMboxY - 15);
-    text("K-M SPACE ⋅ S = -1", KMboxX + KMboxWidth / 2, KMboxY + KMboxHeight + 50 - 30);
+    text("K-M SPACE ⋅ S = -1", KMboxX + KMboxWidth / 2, KMboxY + KMboxHeight + KMgap - 15);
     text("W-A SPACE", AWboxX + AWboxWidth / 2, AWboxY - 15);
     text("W-B SPACE", WBboxX + WBboxWidth / 2, WBboxY - 15);
+    // "LOSS" with a "log10" subscript, centred as a whole
+    var wMain = textWidth("LOSS");
+    textSize(10); var wSub = textWidth("log10"); textSize(15);
+    var xL = LossboxX + LossboxWidth / 2 - (wMain + wSub) / 2;
+    textAlign(LEFT, CENTER);
+    text("LOSS", xL, LossboxY - 15);
+    textSize(10); text("log10", xL + wMain + 1, LossboxY - 10);
+    textSize(15); textAlign(CENTER, CENTER);
     pop();
 }
 
@@ -369,6 +397,7 @@ function drawAWPoint(){
         [x2, y2] = convertToAWBoxCoordinates(st*(i+res), mt/(i+res));
         strokeWeight(2); stroke(teacherLabelColor);
         line(x1, y1, x2, y2);
+        hoverItems.push({x1, y1, x2, y2, priority: 0, text: '\\(a = m^{*} / |w|\\)'});
     }
     pop();
     push();
@@ -398,7 +427,61 @@ function drawWBPoint(){
     stroke(2); strokeWeight(2); fill(studentLabelColor);
     if ((abs(ws) < WBlimX+0.1) & (abs(bs) < WBlimY+0.1)) {ellipse(xw, yb, 10);}
     pop();
+    var [tx1, ty1] = convertToWBBoxCoordinates(0, 0);
+    var [tx2, ty2] = convertToWBBoxCoordinates(st * WBlimX, -kt * WBlimX);
+    hoverItems.push({x1: tx1, y1: ty1, x2: tx2, y2: ty2, priority: 0, text: '\\(b = -k^{*} \\cdot w\\)'});
 }
+
+function drawHoverTooltip() {
+    // explanation of the W-A / W-B element under the mouse (closest within a few pixels, most specific first)
+    var inBox = (x, y, w, h) => mouseX >= x && mouseX <= x + w && mouseY >= y && mouseY <= y + h;
+    if (mouseIsPressed || !(inBox(WBboxX, WBboxY, WBboxWidth, WBboxHeight) || inBox(AWboxX, AWboxY, AWboxWidth, AWboxHeight))) return;
+    var best = null, bestScore = Infinity;
+    for (const it of hoverItems) {
+        var d;
+        if (it.x !== undefined) {
+            d = dist(mouseX, mouseY, it.x, it.y) - 2;
+        } else {
+            // distance to the segment from (x1, y1) to (x2, y2)
+            var dx = it.x2 - it.x1, dy = it.y2 - it.y1;
+            var t = constrain(((mouseX - it.x1) * dx + (mouseY - it.y1) * dy) / (dx * dx + dy * dy), 0, 1);
+            d = dist(mouseX, mouseY, it.x1 + t * dx, it.y1 + t * dy);
+        }
+        if (d > 5) continue;
+        var score = d - 3 * it.priority; // prefer points over lines when both are close
+        if (score < bestScore) { bestScore = score; best = it; }
+    }
+    for (const key in tooltipDivs) tooltipDivs[key].hide();
+    if (!best) return;
+
+    // one MathJax-rendered div per formula, typeset once and reused
+    if (!tooltipDivs[best.text]) {
+        // same style as the button tooltips (addTooltip)
+        tooltipDivs[best.text] = createDiv(best.text)
+            .parent('canvas-container')
+            .style('position', 'absolute')
+            .style('background-color', 'rgba(255, 255, 255, 0.8)')
+            .style('border', '1px solid #ccc')
+            .style('padding', '5px')
+            .style('border-radius', '5px')
+            .style('box-shadow', '0px 0px 10px rgba(0, 0, 0, 0.1)')
+            .style('font-size', '11px')
+            .style('color', '#000')
+            .style('white-space', 'nowrap')
+            .style('pointer-events', 'none')
+            .style('z-index', '10');
+        MathJax.typesetPromise([tooltipDivs[best.text].elt]);
+    }
+    var tip = tooltipDivs[best.text];
+    tip.show();
+    // same placement as the button tooltips (right of and above the cursor), kept inside the canvas
+    var tx = constrain(mouseX + 10, 5, width - tip.elt.offsetWidth - 5);
+    var ty = constrain(mouseY - 30, 5, height - tip.elt.offsetHeight - 5);
+    tip.position(tx, ty);
+}
+
+var tooltipDivs = {};
+
 
 function logTrajectory(){
     // logs trajectory if training is on
@@ -425,7 +508,7 @@ function drawKMTrajectory(){
     // clip the drawing to the box
     beginClip();
     rect(KMboxX, KMboxY, KMboxWidth, KMboxHeight);
-    rect(KMboxX, KMboxY + KMboxHeight + 50, KMboxWidth, KMboxHeight);
+    rect(KMboxX, KMboxY + KMboxHeight + KMgap, KMboxWidth, KMboxHeight);
     endClip();
 
     stroke(studentLabelColor); strokeWeight(2);
@@ -434,7 +517,7 @@ function drawKMTrajectory(){
         var [x2, y2] = convertToKMBoxCoordinates(trajectoryKM[i + 1][0], trajectoryKM[i + 1][1], s=trajectoryKM[i][2]);
         if (!trajectorySkipIdxs.includes(i+1)){ 
             // check for overflow in y coordinates in between the two plots! (clip can't account for it)
-            if ((trajectoryKM[i][2]>0 & y1 < KMboxY + KMboxHeight) | (trajectoryKM[i][2]<0 & y1 > KMboxY + KMboxHeight + 50)){
+            if ((trajectoryKM[i][2]>0 & y1 < KMboxY + KMboxHeight) | (trajectoryKM[i][2]<0 & y1 > KMboxY + KMboxHeight + KMgap)){
                 line(x1, y1, x2, y2); 
             }
         }
@@ -479,6 +562,8 @@ function drawWBTrajectory(){
     pop();
 }
 
+var hoverItems = []; // elements of the W-A and W-B boxes that show an explanation on hover, rebuilt every frame
+
 function drawReentryShading() {
     var errors = computeError(data, kt, st, mt, ct, ws, bs, aS, cs);
     var Ed  = nj.mean(errors);
@@ -498,23 +583,7 @@ function drawReentryShading() {
         var [x1, y1] = convertToWBBoxCoordinates(0, 0);
         var [x2, y2] = convertToWBBoxCoordinates(wSign * WBlimX, R * WBlimX);
         line(x1, y1, x2, y2);
-
-        // Internal fixed point k* = -E[δ] / (sign(w) · E[δx]).
-        // Skip if E[δx] ≈ 0 (no linear residual along this direction).
-        if (Math.abs(Edx) < 1e-8) continue;
-        var kStar = -Ed / (wSign * Edx);
-        // Only draw when k* lies inside the always-on cone (k* < -R).
-        // if (kStar >= -R) continue;
-
-        // Stability: ∂k̇/∂k ∝ a · sign(w) · E[δx].
-        var slope = aS * wSign * Edx;
-        if (slope < 0) stroke(60, 120, 220, 25);   // BLUE:   attractive (stable)
-        else           stroke(230, 150, 30, 25);   // ORANGE: repulsive (unstable)
-        strokeWeight(2);
-        var [xa, ya] = convertToWBBoxCoordinates(0, 0);
-        var [xb, yb] = convertToWBBoxCoordinates(wSign * WBlimX, -kStar * WBlimX);
-        line(xa, ya, xb, yb);
-        strokeWeight(3);
+        hoverItems.push({x1, y1, x2, y2, priority: 1, text: '\\(b = \\sqrt{3}\\,|w|\\)'});
     }
 
     // best linear approximation target, to be shown only inside the cone defined by k = -R:
@@ -533,9 +602,94 @@ function drawReentryShading() {
             line(xt - 5, yt, xt + 5, yt);
             line(xt, yt - 5, xt, yt + 5);
             pop();
+            hoverItems.push({x: xt, y: yt, priority: 3, text: 'Best linear fit with \\(a\\) and \\(c\\) fixed'});
         }
     }
 
 
+    pop();
+}
+
+
+// Loss plot
+
+function computeLoss(){
+    // L = 1/2 * mean(errors^2) over the dataset
+    var n = data.shape[0];
+    var L = 0;
+    for (let i = 0; i < n; i++){
+        var x = data.get(i);
+        var e = aS*Math.max(0, ws*x + bs) + cs - (mt*Math.max(0, st*(x - kt)) + ct);
+        L += e*e;
+    }
+    return Math.max(0.5*L/n, 1e-16); // avoid log(0)
+}
+
+function logLoss(){
+    // pausing and resuming continues the current trace, only a student reset starts a new one
+    if (toggleLearn){
+        if (!lossRunActive){
+            lossTraces.push([]);
+            lossRunActive = true;
+        }
+        lossTraces[lossTraces.length - 1].push(computeLoss());
+    }
+}
+
+function drawLossPlot(){
+    var pad = 6;
+    var x0 = LossboxX + pad, x1 = LossboxX + LossboxWidth - pad;
+    var y0 = LossboxY + LossboxHeight - pad, y1 = LossboxY + pad;
+
+    // dynamic axes: x spans the longest run, y (log10) fits all losses of all traces
+    var nMax = 10, lo = Infinity, hi = -Infinity;
+    for (const tr of lossTraces){
+        nMax = Math.max(nMax, tr.length - 1);
+        for (const v of tr){
+            var l = Math.log10(v);
+            if (l < lo) lo = l;
+            if (l > hi) hi = l;
+        }
+    }
+    // the current loss is always in range, so its marker stays visible
+    var Lnow = Math.max(computeLoss(), 1e-12);
+    lo = Math.min(lo, Math.log10(Lnow));
+    hi = Math.max(hi, Math.log10(Lnow));
+    if (hi - lo < 1e-9){ lo -= 1; hi += 1; }
+    var span = Math.max(hi - lo, 0.5); // avoid zooming into tiny ranges
+    var yLo = (lo + hi) / 2 - 0.55 * span, yHi = (lo + hi) / 2 + 0.55 * span;
+
+    var toX = (i) => map(i, 0, nMax, x0, x1);
+    var toY = (v) => map(Math.log10(v), yLo, yHi, y0, y1);
+
+    push();
+    noStroke(); fill(backgroundBoxColor);
+    rect(LossboxX, LossboxY, LossboxWidth, LossboxHeight);
+
+    // traces: past runs in grey, current run in the student color
+    beginClip(); rect(LossboxX, LossboxY, LossboxWidth, LossboxHeight); endClip();
+    noFill();
+    for (let t = 0; t < lossTraces.length; t++){
+        var tr = lossTraces[t];
+        var current = (t === lossTraces.length - 1);
+        stroke(current ? studentLabelColor : color(160, 160, 160, 170));
+        strokeWeight(current ? 2 : 1.5);
+        var stride = Math.max(1, Math.floor(tr.length / LossboxWidth)); // at most ~1 vertex per pixel
+        beginShape();
+        for (let i = 0; i < tr.length; i += stride) vertex(toX(i), toY(tr[i]));
+        vertex(toX(tr.length - 1), toY(tr[tr.length - 1]));
+        endShape();
+    }
+
+    // current loss value
+    noStroke(); fill(titleTextColor); textSize(9); textAlign(RIGHT, TOP);
+    text("L = " + Lnow.toExponential(2), LossboxX + LossboxWidth - 5, LossboxY + 4);
+    pop();
+
+    // marker at the current loss, at the end of the current run (or at the start after a student reset)
+    var nNow = lossRunActive ? lossTraces[lossTraces.length - 1].length - 1 : 0;
+    push();
+    stroke(2); strokeWeight(2); fill(studentLabelColor);
+    ellipse(toX(Math.max(nNow, 0)), toY(Lnow), 10);
     pop();
 }

@@ -17,7 +17,7 @@ function invertFromIOBoxCoordinates(x, y) {
 
 function convertToKMBoxCoordinates(x, y, s=1, limX = sqrt3, limY = KMlimY) {
     var offset_s = 0;
-    if (s==-1) {offset_s = KMboxHeight+35;}
+    if (s==-1) {offset_s = KMboxHeight + KMgap;}
     // Convert the x and y coordinates to the box coordinates
     var KMboxX2 = KMboxX + KMboxWidth;
     var KMboxY2 = KMboxY + KMboxHeight;
@@ -28,7 +28,7 @@ function convertToKMBoxCoordinates(x, y, s=1, limX = sqrt3, limY = KMlimY) {
 
 function invertFromKMBoxCoordinates(x, y, s=1, limX = sqrt3, limY = KMlimY) {
     var offset_s = 0;
-    if (s == -1) { offset_s = KMboxHeight + 35; }
+    if (s == -1) { offset_s = KMboxHeight + KMgap; }
     var KMboxX2 = KMboxX + KMboxWidth;
     var KMboxY2 = KMboxY + KMboxHeight;
     var xCoord = map(x, KMboxX, KMboxX2, -limX, limX);

@@ -2,6 +2,7 @@ function option_initializer(selected) {
     // call function from optionInits
     if (optionInits[selected]) {
         optionInits[selected].forEach(fn => fn());
+        lossRunActive = false; // the next learning step starts a new loss trace, like the student reset
         // redraw the boxes, relus, and input boxes
         drawBoxes();
         drawRelu(kt, st, mt, ct, teacherLabelColor);
