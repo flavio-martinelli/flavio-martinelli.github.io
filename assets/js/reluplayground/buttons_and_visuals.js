@@ -13,6 +13,22 @@ var currentOption = 'Home'; // Default option
 
 // Define graphics for the buttons
 
+// Button icons as inline SVG: unicode symbols sit off-center differently in every browser/font
+var ICON_STROKE = 'fill="none" stroke="white" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"';
+var svgIcon = (inner) => `<svg viewBox="0 0 24 24" width="28" height="28" style="display:block;pointer-events:none">${inner}</svg>`;
+var TARGET_SVG = `<g ${ICON_STROKE}><circle cx="12" cy="12" r="9.6"/><circle cx="12" cy="12" r="5.3"/></g><circle cx="12" cy="12" r="1.7" fill="white"/>`;
+var icons = {
+    play:   svgIcon('<path d="M8.3 4.9v14.2L19.6 12z" fill="white" stroke="white" stroke-width="1.5" stroke-linejoin="round"/>'),
+    pause:  svgIcon('<g fill="white"><rect x="6.3" y="5.1" width="4.1" height="13.8" rx="1.1"/><rect x="13.6" y="5.1" width="4.1" height="13.8" rx="1.1"/></g>'),
+    // counter-clockwise arc centered on the button (r = 7.5), 100° gap on the left with tail and arrow base
+    // vertically aligned (130° and 230°), solid arrowhead along the arc's direction
+    reset:  svgIcon('<path d="M7.18 17.75A7.5 7.5 0 1 0 7.18 6.25" fill="none" stroke="white" stroke-width="2.8" stroke-linecap="round"/><path d="M3.66 9.21L4.80 3.42L9.56 9.09z" fill="white" stroke="white" stroke-width="1" stroke-linejoin="round"/>'),
+    // shifted slightly left: the arrow-shaped outline looks right-heavy when centered geometrically
+    erase:  svgIcon(`<g ${ICON_STROKE} transform="translate(-0.8 0)"><path d="M9.5 5.5H20a1.5 1.5 0 0 1 1.5 1.5v10a1.5 1.5 0 0 1-1.5 1.5H9.5L2.5 12z"/><path d="M11.5 9.5l5 5M16.5 9.5l-5 5"/></g>`),
+    mapOff: svgIcon(TARGET_SVG),
+    mapOn:  svgIcon(TARGET_SVG + `<path d="M6 6l12 12M18 6L6 18" ${ICON_STROKE}/>`), // plain cross over the bullseye
+};
+
 function styleCircularButton(button, color) {
     button.style('font-size', '32px');
     button.style('padding', '0');
@@ -33,12 +49,14 @@ function styleCircularButton(button, color) {
 // Setup all buttons
 
 function setupButtons() {
-    setupLearnButton(IOboxX + 10, 15); // learn button
-    resetTeacherButton(IOboxX + 10 + 50, 15); // reset teacher parameters button
-    resetStudentButton(IOboxX + 10 + 50*2, 15); // reset student parameters button
-    resetTrajectoryButton(IOboxX + 10 + 50*3, 15); // reset trajectory button
-    setupLRSlider(IOboxX + 20 + 50*4, 35); // learning rate slider
-    displayDropdownMenu(540, 20); // dropdown menu
+    var bx = IOboxX; // round buttons aligned with the left edge of the input-output space
+    setupLearnButton(bx, 15); // learn button
+    resetTeacherButton(bx + 50, 15); // reset teacher parameters button
+    resetStudentButton(bx + 50*2, 15); // reset student parameters button
+    resetTrajectoryButton(bx + 50*3, 15); // reset trajectory button
+    setupOutcomeButton(bx + 50*4, 15, bx, 62, 50*4 + 40); // outcome map button, its legend centered under the five buttons
+    setupLRSlider(303, 35); // learning rate slider, centered between the buttons and the dropdown
+    displayDropdownMenu(568, 15.5); // dropdown menu, its label on the same line as "Learning Rate"
 }
 
 function displayDropdownMenu(x, y) {
@@ -58,6 +76,7 @@ function displayDropdownMenu(x, y) {
 function setupDropdownMenu(x, y, options, onChangeCallback) {
     let dropdown = createSelect();
     dropdown.position(x, y).parent('canvas-container');
+    dropdown.style('width', '140px');
     options.forEach(opt => dropdown.option(opt));
     dropdown.changed(() => {
         let value = dropdown.value();
@@ -77,7 +96,7 @@ function setupDropdownMenu(x, y, options, onChangeCallback) {
 // Learn button
 
 function setupLearnButton(x, y) {
-    learnButton = createButton('\u23F5'); // Initial symbol is 'play'
+    learnButton = createButton(icons.play);
     learnButton.position(x, y).parent('canvas-container'); // Position of the button
     learnButton.mousePressed(toggleLearnFunction); // Attach the callback function    
     styleCircularButton(learnButton, '#66CDAA'); // Style the button as circular
@@ -85,13 +104,13 @@ function setupLearnButton(x, y) {
 }
 function toggleLearnFunction() {
     toggleLearn = !toggleLearn;
-    learnButton.html(toggleLearn ? '\u23F8' : '\u23F5'); // Toggle between 'play' and 'stop' symbols
+    learnButton.html(toggleLearn ? icons.pause : icons.play); // toggle between play and pause
 }
 
 // Reset buttons
 
 function resetStudentButton(x, y) {
-    var resetButton = createButton('↺');
+    var resetButton = createButton(icons.reset);
     resetButton.position(x, y).parent('canvas-container');
     styleCircularButton(resetButton, studentLabelColor);
     resetButton.mousePressed(resetStudentParameters);
@@ -99,9 +118,10 @@ function resetStudentButton(x, y) {
 }
 function resetStudentParameters() {
     optionInits[currentOption][1]();
+    lossRunActive = false; // the next learning step starts a new loss trace
 }
 function resetTeacherButton(x, y) {
-    var resetButton = createButton('↺');
+    var resetButton = createButton(icons.reset);
     resetButton.position(x, y).parent('canvas-container');
     styleCircularButton(resetButton, teacherLabelColor);
     resetButton.mousePressed(resetTeacherParameters);
@@ -114,10 +134,9 @@ function resetTeacherParameters() {
 // reset trajectory button
 
 function resetTrajectoryButton(x, y) {
-    var resetButton = createButton('⌫');
+    var resetButton = createButton(icons.erase);
     resetButton.position(x, y).parent('canvas-container');
     styleCircularButton(resetButton, '#FFB347');
-    resetButton.style('font-size', '22px');
 
     resetButton.mousePressed(resetTrajectory);
     addTooltip(resetButton, "Erase trajectories");
@@ -128,15 +147,18 @@ function resetTrajectory() {
     trajectoryWB = [];
     trajectorySkipIdxs = [];
     trajectoryLagCount = 0;
+    lossTraces = [];
+    lossRunActive = false;
 }
 
 // Learning rate slider
 
 function setupLRSlider(x, y) {
-    createDiv('Learning Rate').position(x, y-23).parent('canvas-container');
+    var label = createDiv('Learning Rate').position(x, y-23).parent('canvas-container').style('font-size', '16px');
     learningRateSlider = createSlider(-4, 0, -2, 0.1);
     learningRateSlider.position(x, y).parent('canvas-container');
-    learningRateSlider.style('width', '100px');
+    learningRateSlider.style('margin', '0'); // no default margin, so the track starts under the label
+    learningRateSlider.style('width', label.elt.offsetWidth + 'px'); // as wide as the label
 }
 function updateLRSlider() {
     var learning_rate = learningRateSlider.value();
@@ -146,8 +168,8 @@ function updateLRSlider() {
 
 function setupParameterInputs() {
     var startingX = IOboxX + 35;
-    var teacherOffsetY = 110;
-    var studentOffsetY = 110; // Align student boxes with teacher boxes vertically
+    var teacherOffsetY = 121;
+    var studentOffsetY = 121; // Align student boxes with teacher boxes vertically
     var sepY = 30;  // Y separation between boxes
     var spaceTS = 125; // Space between teacher and student boxes
     var teacherColor = '#FFD6D6';
